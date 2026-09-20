@@ -81,6 +81,13 @@
   .book .actions{display:flex;gap:.6rem;flex-wrap:wrap}
   .book .btn{padding:.5rem 1.1rem;font-size:.95rem}
   .empty{border:1px dashed var(--gold);padding:2rem;border-radius:8px;margin-top:2rem}
+  .cover-link{display:block;text-decoration:none;color:inherit;transition:transform .2s ease}
+  .cover-link:hover{transform:translateY(-4px)}
+  .book h3 a{color:inherit;text-decoration:none}
+  .book h3 a:hover{color:var(--gold-soft);text-decoration:underline;text-underline-offset:4px}
+  .more{margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid rgba(234,208,138,.3);text-align:center}
+  .more h3{color:var(--white);margin-bottom:.4rem}
+  .more p{max-width:52ch;margin:0 auto 1.4rem}
 
   /* Community */
   .community-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2.5rem}
@@ -188,6 +195,12 @@
       <h2>Books</h2>
       <p class="lede">Read online or download any book for free.</p>
       <div class="shelf" id="shelf"></div>
+
+      <div class="more">
+        <h3>More books &amp; additional resources</h3>
+        <p>Explore the full library of extra books, workbooks, and resources.</p>
+        <a class="btn btn-line" id="more-link" href="#" target="_blank" rel="noopener">Browse more books &amp; resources</a>
+      </div>
     </div>
   </section>
 
@@ -297,8 +310,8 @@ function renderBooks(){
     const el = document.createElement("article");
     el.className = "book";
     el.innerHTML = `
-      ${coverHTML}
-      <h3>${b.title}</h3>
+      <a class="cover-link" href="${read}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${coverHTML}</a>
+      <h3><a href="${read}" target="_blank" rel="noopener">${b.title}</a></h3>
       <p>${b.description}</p>
       <div class="actions">
         <a class="btn btn-gold" href="${read}" target="_blank" rel="noopener">Read online</a>
@@ -307,6 +320,14 @@ function renderBooks(){
   });
 }
 renderBooks();
+
+/* "More books & additional resources" link.
+   Paste the share link to ONE dedicated Google Drive folder here
+   (Share > General access: "Anyone with the link" > Viewer). */
+const MORE_RESOURCES_LINK = "PASTE_GOOGLE_DRIVE_FOLDER_LINK_HERE";
+if (/^https?:\/\//.test(MORE_RESOURCES_LINK)) {
+  document.getElementById("more-link").href = MORE_RESOURCES_LINK;
+}
 
 /* Mobile menu */
 const btn = document.querySelector(".menu-btn");
