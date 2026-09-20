@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kemetic Science Presents: Life Lessons on Spirituality</title>
-<meta name="description" content="Life lessons on spirituality, coaching, and community. Read and download books by Kemetic Science.">
+<meta name="description" content="Life lessons on spirituality, coaching, and community. Read books by Kemetic Science online for free.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -77,8 +77,7 @@
   .cover img{width:100%;height:100%;object-fit:cover}
   .cover.has-img{padding:0}
   .book h3{margin-top:1rem;color:var(--white)}
-  .book p{font-size:1rem;margin:.3rem 0 1rem;flex:1}
-  .book .actions{display:flex;gap:.6rem;flex-wrap:wrap}
+  .book .actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
   .book .btn{padding:.5rem 1.1rem;font-size:.95rem}
   .empty{border:1px dashed var(--gold);padding:2rem;border-radius:8px;margin-top:2rem}
   .cover-link{display:block;text-decoration:none;color:inherit;transition:transform .2s ease}
@@ -193,7 +192,7 @@
   <section id="books" class="books">
     <div class="wrap">
       <h2>Books</h2>
-      <p class="lede">Read online or download any book for free.</p>
+      <p class="lede">Read any book online for free.</p>
       <div class="shelf" id="shelf"></div>
 
       <div class="more">
@@ -265,21 +264,18 @@
 const BOOKS = [
   {
     title: "Book Title One",
-    description: "A short description of what this book teaches.",
     driveLink: "PASTE_GOOGLE_DRIVE_LINK_HERE",
     cover: "",
     color: "#2F6B55"
   },
   {
     title: "Book Title Two",
-    description: "A short description of what this book teaches.",
     driveLink: "PASTE_GOOGLE_DRIVE_LINK_HERE",
     cover: "",
     color: "#7A3B2E"
   },
   {
     title: "Book Title Three",
-    description: "A short description of what this book teaches.",
     driveLink: "PASTE_GOOGLE_DRIVE_LINK_HERE",
     cover: "",
     color: "#1E3261"
@@ -303,7 +299,6 @@ function renderBooks(){
     const id = driveId(b.driveLink);
     const coverId = driveId(b.cover);
     const read = id ? `https://drive.google.com/file/d/${id}/view` : "#";
-    const dl = id ? `https://drive.google.com/uc?export=download&id=${id}` : "#";
     const coverHTML = coverId
       ? `<div class="cover has-img"><img src="https://drive.google.com/thumbnail?id=${coverId}&sz=w600" alt="Cover of ${b.title}"></div>`
       : `<div class="cover" style="background:${b.color || '#2F6B55'}"><span class="ct">${b.title}</span><span class="ca">Kemetic Science</span></div>`;
@@ -312,7 +307,6 @@ function renderBooks(){
     el.innerHTML = `
       <a class="cover-link" href="${read}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${coverHTML}</a>
       <h3><a href="${read}" target="_blank" rel="noopener">${b.title}</a></h3>
-      <p>${b.description}</p>
       <div class="actions">
         <a class="btn btn-gold" href="${read}" target="_blank" rel="noopener">Read online</a>
       </div>`;
