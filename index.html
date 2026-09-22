@@ -54,10 +54,20 @@
   .btn-gold:hover{background:var(--gold-soft)}
   .btn-line{color:var(--gold-soft);background:transparent}
   .btn-line:hover{background:rgba(212,168,58,.15)}
-  .horizon{display:block;width:100%;max-width:1000px;margin:40px auto 0}
-  .sun{transform-origin:450px 260px;animation:rise 2.6s ease-out both}
-  @keyframes rise{from{transform:translateY(110px);opacity:0}to{transform:none;opacity:1}}
-  @media (prefers-reduced-motion:reduce){.sun{animation:none}html{scroll-behavior:auto}}
+  .horizon{display:block;width:100%;max-width:1000px;margin:40px auto 0;overflow:hidden}
+  .sun-glow{transform-origin:450px 300px;animation:glowRise 3.8s cubic-bezier(.22,.61,.36,1) both}
+  .sun-rays{transform-origin:450px 260px;animation:sunrise 3.6s cubic-bezier(.22,.61,.36,1) both}
+  .sun-disc{transform-origin:450px 260px;animation:sunrise 3.6s cubic-bezier(.22,.61,.36,1) both}
+  @keyframes sunrise{
+    0%{transform:translateY(230px)}
+    75%{transform:translateY(-124px)}
+    100%{transform:translateY(-110px)}
+  }
+  @keyframes glowRise{
+    0%{opacity:0;transform:translateY(50px)}
+    100%{opacity:1;transform:translateY(-65px)}
+  }
+  @media (prefers-reduced-motion:reduce){.sun-glow,.sun-rays,.sun-disc{animation:none}html{scroll-behavior:auto}}
 
 
   /* Teachings */
@@ -71,17 +81,24 @@
   .books h2{color:var(--white)}
   .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:2rem;margin-top:2.5rem}
   .book{display:flex;flex-direction:column}
-  .cover{aspect-ratio:2/3;border-radius:4px 10px 10px 4px;padding:1.4rem 1.2rem;display:flex;flex-direction:column;justify-content:space-between;color:var(--white);box-shadow:inset 8px 0 0 rgba(0,0,0,.25);overflow:hidden}
-  .cover .ct{font-family:var(--display);font-size:1.5rem;line-height:1.2}
-  .cover .ca{font-size:.95rem;color:var(--gold-soft)}
-  .cover img{width:100%;height:100%;object-fit:cover}
-  .cover.has-img{padding:0}
+  .cover{position:relative;aspect-ratio:2/3;border-radius:3px 8px 8px 3px;color:var(--white);box-shadow:0 10px 24px rgba(0,0,0,.35), inset 6px 0 0 rgba(0,0,0,.3), inset 0 0 0 1px rgba(234,208,138,.25);overflow:hidden;background-image:radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.14), transparent 60%), linear-gradient(160deg, rgba(255,255,255,.08), transparent 40%)}
+  .cover::before{content:"";position:absolute;inset:10px;border:1px solid rgba(234,208,138,.55);border-radius:2px;pointer-events:none}
+  .cover::after{content:"";position:absolute;inset:14px;border:1px solid rgba(234,208,138,.22);border-radius:1px;pointer-events:none}
+  .cover-inner{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.8rem 1.4rem;gap:.9rem}
+  .cover-glyph{width:34px;height:34px;opacity:.85}
+  .cover-glyph svg{width:100%;height:100%;display:block}
+  .cover-rule{width:34px;height:1px;background:linear-gradient(90deg, transparent, var(--gold-soft), transparent)}
+  .cover .ct{font-family:var(--display);font-size:1.3rem;line-height:1.32;letter-spacing:.01em}
+  .cover .ca{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft);opacity:.85}
+  .cover img{width:100%;height:100%;object-fit:cover;display:block}
+  .cover.has-img::before,.cover.has-img::after{display:none}
   .book h3{margin-top:1rem;color:var(--white)}
   .book .actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.9rem}
   .book .btn{padding:.5rem 1.1rem;font-size:.95rem}
   .empty{border:1px dashed var(--gold);padding:2rem;border-radius:8px;margin-top:2rem}
-  .cover-link{display:block;text-decoration:none;color:inherit;transition:transform .2s ease}
-  .cover-link:hover{transform:translateY(-4px)}
+  .cover-link{display:block;text-decoration:none;color:inherit;transition:transform .25s ease, box-shadow .25s ease;border-radius:3px 8px 8px 3px}
+  .cover-link:hover{transform:translateY(-5px)}
+  .cover-link:hover .cover{box-shadow:0 16px 32px rgba(0,0,0,.45), inset 6px 0 0 rgba(0,0,0,.3), inset 0 0 0 1px rgba(234,208,138,.4)}
   .book h3 a{color:inherit;text-decoration:none}
   .book h3 a:hover{color:var(--gold-soft);text-decoration:underline;text-underline-offset:4px}
   .more{margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid rgba(234,208,138,.3);text-align:center}
@@ -173,7 +190,7 @@
       </defs>
 
       <!-- glow behind sun -->
-      <circle cx="450" cy="300" r="260" fill="url(#sunGlow)"/>
+      <circle class="sun-glow" cx="450" cy="300" r="260" fill="url(#sunGlow)"/>
 
       <!-- stars -->
       <g fill="#EAD08A">
@@ -190,7 +207,7 @@
       </g>
 
       <!-- sunburst rays -->
-      <g class="sun" stroke="#EAD08A" stroke-width="2" opacity=".55">
+      <g class="sun-rays" stroke="#EAD08A" stroke-width="2" opacity=".55">
         <line x1="450" y1="120" x2="450" y2="80"/>
         <line x1="450" y1="120" x2="450" y2="80" transform="rotate(30 450 260)"/>
         <line x1="450" y1="120" x2="450" y2="80" transform="rotate(60 450 260)"/>
@@ -201,7 +218,7 @@
       </g>
 
       <!-- sun disc with concentric rings -->
-      <g class="sun">
+      <g class="sun-disc">
         <circle cx="450" cy="260" r="140" fill="none" stroke="#EAD08A" stroke-width="1" opacity=".25"/>
         <circle cx="450" cy="260" r="112" fill="none" stroke="#EAD08A" stroke-width="1.5" opacity=".4"/>
         <circle cx="450" cy="260" r="95" fill="url(#sunBody)"/>
@@ -343,20 +360,20 @@
    ============================================================ */
 const BOOKS = [
   {
-    title: "Book Title One",
-    driveLink: "PASTE_GOOGLE_DRIVE_LINK_HERE",
+    title: "The Book of Gates",
+    driveLink: "https://drive.google.com/file/d/1xhI2pdX_gpEH3ufafjBKy73IZGqXTDI2/view?usp=sharing",
     cover: "",
     color: "#2F6B55"
   },
   {
-    title: "Book Title Two",
-    driveLink: "PASTE_GOOGLE_DRIVE_LINK_HERE",
+    title: "The Book of Am-Tuat",
+    driveLink: "https://drive.google.com/file/d/1N2U-YUyY-telZgx7-HxN8Bwj2uklwv9W/view?usp=sharing",
     cover: "",
     color: "#7A3B2E"
   },
   {
-    title: "Book Title Three",
-    driveLink: "PASTE_GOOGLE_DRIVE_LINK_HERE",
+    title: "Stolen Legacy",
+    driveLink: "https://drive.google.com/file/d/1VRxPk_0EAuEuDlFFcCLGVzv0wEPDE26Q/view?usp=sharing",
     cover: "",
     color: "#1E3261"
   }
@@ -375,13 +392,29 @@ function renderBooks(){
     shelf.outerHTML = '<p class="empty">New books are coming soon. Check back shortly.</p>';
     return;
   }
+  const GLYPH = `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#EAD08A" stroke-width="1.3">
+    <circle cx="20" cy="20" r="9" fill="#EAD08A" fill-opacity=".18"/>
+    <circle cx="20" cy="20" r="9"/>
+    <circle cx="20" cy="20" r="15" stroke-opacity=".5"/>
+    <line x1="20" y1="1" x2="20" y2="7"/>
+    <line x1="20" y1="33" x2="20" y2="39"/>
+    <line x1="1" y1="20" x2="7" y2="20"/>
+    <line x1="33" y1="20" x2="39" y2="20"/>
+  </svg>`;
   BOOKS.forEach(b => {
     const id = driveId(b.driveLink);
     const coverId = driveId(b.cover);
     const read = id ? `https://drive.google.com/file/d/${id}/view` : "#";
     const coverHTML = coverId
       ? `<div class="cover has-img"><img src="https://drive.google.com/thumbnail?id=${coverId}&sz=w600" alt="Cover of ${b.title}"></div>`
-      : `<div class="cover" style="background:${b.color || '#2F6B55'}"><span class="ct">${b.title}</span><span class="ca">Kemetic Science</span></div>`;
+      : `<div class="cover" style="background:${b.color || '#2F6B55'}">
+           <div class="cover-inner">
+             <div class="cover-glyph">${GLYPH}</div>
+             <span class="ct">${b.title}</span>
+             <div class="cover-rule"></div>
+             <span class="ca">Recommended Reading</span>
+           </div>
+         </div>`;
     const el = document.createElement("article");
     el.className = "book";
     el.innerHTML = `
