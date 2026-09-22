@@ -54,9 +54,9 @@
   .btn-gold:hover{background:var(--gold-soft)}
   .btn-line{color:var(--gold-soft);background:transparent}
   .btn-line:hover{background:rgba(212,168,58,.15)}
-  .horizon{display:block;width:100%;max-width:900px;margin:48px auto 0}
-  .sun{transform-origin:450px 230px;animation:rise 2.4s ease-out both}
-  @keyframes rise{from{transform:translateY(90px);opacity:0}to{transform:none;opacity:1}}
+  .horizon{display:block;width:100%;max-width:1000px;margin:40px auto 0}
+  .sun{transform-origin:450px 260px;animation:rise 2.6s ease-out both}
+  @keyframes rise{from{transform:translateY(110px);opacity:0}to{transform:none;opacity:1}}
   @media (prefers-reduced-motion:reduce){.sun{animation:none}html{scroll-behavior:auto}}
 
 
@@ -147,13 +147,93 @@
         <a class="btn btn-line" href="#community">Join the community</a>
       </div>
     </div>
-    <svg class="horizon" viewBox="0 0 900 260" aria-hidden="true">
-      <g class="sun">
-        <circle cx="450" cy="230" r="120" fill="#D4A83A"/>
-        <circle cx="450" cy="230" r="150" fill="none" stroke="#EAD08A" stroke-width="2" opacity=".5"/>
-        <circle cx="450" cy="230" r="185" fill="none" stroke="#EAD08A" stroke-width="1" opacity=".3"/>
+    <svg class="horizon" viewBox="0 0 900 340" aria-hidden="true">
+      <defs>
+        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#EAD08A" stop-opacity=".55"/>
+          <stop offset="55%" stop-color="#D4A83A" stop-opacity=".18"/>
+          <stop offset="100%" stop-color="#D4A83A" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="sunBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F3D98B"/>
+          <stop offset="100%" stop-color="#C8922B"/>
+        </linearGradient>
+        <linearGradient id="pyraLeftFace" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#233B72"/>
+          <stop offset="100%" stop-color="#15213F"/>
+        </linearGradient>
+        <linearGradient id="pyraRightFace" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#0F1830"/>
+          <stop offset="100%" stop-color="#0A1122"/>
+        </linearGradient>
+        <linearGradient id="pyraSmallFace" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#1B2C56"/>
+          <stop offset="100%" stop-color="#101a34"/>
+        </linearGradient>
+      </defs>
+
+      <!-- glow behind sun -->
+      <circle cx="450" cy="300" r="260" fill="url(#sunGlow)"/>
+
+      <!-- stars -->
+      <g fill="#EAD08A">
+        <circle cx="90" cy="50" r="1.6" opacity=".8"/>
+        <circle cx="150" cy="95" r="1.2" opacity=".6"/>
+        <circle cx="60" cy="130" r="1.4" opacity=".7"/>
+        <circle cx="220" cy="60" r="1.3" opacity=".7"/>
+        <circle cx="760" cy="55" r="1.5" opacity=".8"/>
+        <circle cx="820" cy="100" r="1.2" opacity=".6"/>
+        <circle cx="700" cy="120" r="1.3" opacity=".7"/>
+        <circle cx="850" cy="150" r="1.4" opacity=".7"/>
+        <circle cx="400" cy="40" r="1.2" opacity=".6"/>
+        <circle cx="500" cy="55" r="1.3" opacity=".65"/>
       </g>
-      <path d="M0 230 L250 230 L330 150 L410 230 L490 230 L560 170 L630 230 L900 230 L900 260 L0 260Z" fill="#15213F"/>
+
+      <!-- sunburst rays -->
+      <g class="sun" stroke="#EAD08A" stroke-width="2" opacity=".55">
+        <line x1="450" y1="120" x2="450" y2="80"/>
+        <line x1="450" y1="120" x2="450" y2="80" transform="rotate(30 450 260)"/>
+        <line x1="450" y1="120" x2="450" y2="80" transform="rotate(60 450 260)"/>
+        <line x1="450" y1="120" x2="450" y2="80" transform="rotate(-30 450 260)"/>
+        <line x1="450" y1="120" x2="450" y2="80" transform="rotate(-60 450 260)"/>
+        <line x1="450" y1="120" x2="450" y2="80" transform="rotate(90 450 260)"/>
+        <line x1="450" y1="120" x2="450" y2="80" transform="rotate(-90 450 260)"/>
+      </g>
+
+      <!-- sun disc with concentric rings -->
+      <g class="sun">
+        <circle cx="450" cy="260" r="140" fill="none" stroke="#EAD08A" stroke-width="1" opacity=".25"/>
+        <circle cx="450" cy="260" r="112" fill="none" stroke="#EAD08A" stroke-width="1.5" opacity=".4"/>
+        <circle cx="450" cy="260" r="95" fill="url(#sunBody)"/>
+        <circle cx="450" cy="260" r="95" fill="none" stroke="#8A5F1E" stroke-width="1" opacity=".3"/>
+      </g>
+
+      <!-- distant small pyramid, left -->
+      <polygon points="120,300 195,225 270,300" fill="#101a34" opacity=".85"/>
+      <polygon points="195,225 232,300 195,300" fill="#182548" opacity=".85"/>
+
+      <!-- distant small pyramid, right -->
+      <polygon points="640,300 705,240 770,300" fill="#101a34" opacity=".85"/>
+
+      <!-- main pyramid, left face lit, right face shaded -->
+      <polygon points="330,300 460,150 460,300" fill="url(#pyraLeftFace)"/>
+      <polygon points="460,150 460,300 610,300" fill="url(#pyraRightFace)"/>
+      <!-- edge lines / stone courses on lit face -->
+      <g stroke="#0E1830" stroke-width="1.5" opacity=".35">
+        <line x1="366" y1="269" x2="454" y2="269"/>
+        <line x1="392" y1="238" x2="458" y2="238"/>
+        <line x1="418" y1="207" x2="458" y2="207"/>
+        <line x1="444" y1="176" x2="458" y2="176"/>
+      </g>
+      <polyline points="330,300 460,150 610,300" fill="none" stroke="#EAD08A" stroke-width="2" opacity=".7"/>
+
+      <!-- second smaller pyramid, front-right, casts silhouette over sun edge -->
+      <polygon points="560,300 655,195 750,300" fill="url(#pyraSmallFace)"/>
+      <polyline points="560,300 655,195 750,300" fill="none" stroke="#EAD08A" stroke-width="1.5" opacity=".5"/>
+
+      <!-- ground line -->
+      <rect x="0" y="300" width="900" height="40" fill="#101a34"/>
+      <line x1="0" y1="300" x2="900" y2="300" stroke="#D4A83A" stroke-width="1.5" opacity=".4"/>
     </svg>
   </section>
 
